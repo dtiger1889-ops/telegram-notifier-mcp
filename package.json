@@ -1,0 +1,13 @@
+{
+  "name": "telegram-notifier-mcp",
+  "version": "1.0.0",
+  "description": "Minimal Telegram Bot API notifier as an MCP server.",
+  "type": "module",
+  "main": "server/index.js",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

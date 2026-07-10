@@ -1,0 +1,38 @@
+{
+  "manifest_version": "0.3",
+  "name": "telegram-notifier",
+  "display_name": "Telegram Notifier",
+  "version": "1.0.0",
+  "description": "Send a text message to a single Telegram chat via the Bot API.",
+  "long_description": "Minimal MCP server exposing one tool, `send_message(text, parse_mode?)`, that posts to https://api.telegram.org using the configured bot token and chat ID. Built for unattended notifications from scheduled tasks. Bot token is stored in OS-level secure storage (Windows Credential Manager on this machine).",
+  "author": {
+    "name": "Daniel Mack"
+  },
+  "server": {
+    "type": "node",
+    "entry_point": "server/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": ["${__dirname}/server/index.js"],
+      "env": {
+        "BOT_TOKEN": "${user_config.bot_token}",
+        "CHAT_ID": "${user_config.chat_id}"
+      }
+    }
+  },
+  "user_config": {
+    "bot_token": {
+      "type": "string",
+      "title": "Telegram Bot Token",
+      "description": "The HTTP API token from @BotFather (format: 123456789:AAxxxx...).",
+      "sensitive": true,
+      "required": true
+    },
+    "chat_id": {
+      "type": "string",
+      "title": "Chat ID",
+      "description": "Target chat ID to send messages to (integer as string, e.g. 889721252).",
+      "required": true
+    }
+  }
+}
