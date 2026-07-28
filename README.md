@@ -28,6 +28,10 @@ Register as a stdio MCP server:
 
 The `manifest.json` also makes this packageable as an MCPB desktop extension, with the token and chat ID collected as user config at install time.
 
+## Where it can run
+
+This is a **local stdio server**: it works in any session executing on the machine where it's registered (interactive Claude Code / Desktop, and scheduled tasks bound to a local runtime). A **cloud/hosted scheduled run cannot spawn it** — those sandboxes have no local MCP servers. From cloud runs, post to the Telegram Bot API directly over HTTPS (`https://api.telegram.org/bot<TOKEN>/sendMessage`) instead; the whole server is a thin wrapper around that one endpoint anyway.
+
 ## License
 
 MIT. See [LICENSE](LICENSE).
