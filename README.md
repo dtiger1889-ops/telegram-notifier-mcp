@@ -1,5 +1,7 @@
 # telegram-notifier-mcp
 
+![Illustrated notification example with an invented tool call, success response and message](assets/example-output.png)
+
 A minimal MCP (Model Context Protocol) server that gives an AI agent one tool: `send_message(text, parse_mode?)`, which posts a message to a Telegram chat via a bot. Useful for "notify me when the long job finishes" workflows from Claude Code, Claude Desktop, or any MCP client.
 
 No database, no state, one dependency surface: the server reads `BOT_TOKEN` and `CHAT_ID` from the environment and calls the Telegram Bot API.
