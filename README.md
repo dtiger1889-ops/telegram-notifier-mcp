@@ -2,9 +2,15 @@
 
 ![Illustrated notification example with an invented tool call, success response and message](assets/example-output.png)
 
-A minimal MCP (Model Context Protocol) server that gives an AI agent one tool: `send_message(text, parse_mode?)`, which posts a message to a Telegram chat via a bot. Useful for "notify me when the long job finishes" workflows from Claude Code, Claude Desktop, or any MCP client.
+A minimal MCP (Model Context Protocol) server that gives an AI agent one tool: `send_message(text, parse_mode?)`, which posts a message to a Telegram chat via a bot. Useful for "notify me when the long job finishes" workflows from Claude Code, Claude Desktop, or another client with compatible stdio MCP support.
 
 No database, no state, one dependency surface: the server reads `BOT_TOKEN` and `CHAT_ID` from the environment and calls the Telegram Bot API.
+
+## Start here
+
+This is an MCP server you register with your agent, not a skill. You need Node.js 18 or newer, npm, a Telegram account and bot, and a client that can launch a local stdio MCP server. Download or clone this repo and run Setup from its root; keep the bot token in private configuration.
+
+After registration, ask your agent: "Confirm that the telegram-notifier send_message tool is available. Show me the configured destination, without exposing the token, and wait for permission before sending a test message." After you approve the test, success is the message appearing in that chat. Merely installing the server sends nothing. Another client needs compatible stdio MCP support; a hosted session needs an explicit bridge or a separate HTTPS integration.
 
 ## Setup
 
@@ -32,7 +38,11 @@ The `manifest.json` also makes this packageable as an MCPB desktop extension, wi
 
 ## Where it can run
 
-This is a **local stdio server**: it works in any session executing on the machine where it's registered (interactive Claude Code / Desktop, and scheduled tasks bound to a local runtime). A **cloud/hosted scheduled run cannot spawn it** — those sandboxes have no local MCP servers. From cloud runs, post to the Telegram Bot API directly over HTTPS (`https://api.telegram.org/bot<TOKEN>/sendMessage`) instead; the whole server is a thin wrapper around that one endpoint anyway.
+This is a **local stdio server**: a compatible client on that machine must register and launch it. A **cloud/hosted scheduled run cannot directly spawn this server on your PC**; it needs an explicitly configured connection to that machine. Another option is to call the Telegram Bot API over HTTPS (`https://api.telegram.org/bot<TOKEN>/sendMessage`) from the hosted environment with its own private credentials. The server is a thin wrapper around that endpoint.
+
+## Help
+
+For setup questions or errors, [open an issue](https://github.com/dtiger1889-ops/telegram-notifier-mcp/issues) with the relevant versions and a redacted error description.
 
 ## License
 
